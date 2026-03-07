@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getActiveBets } from '@/lib/admin';
 import { db } from '@/lib/db';
 import { betOptionsTable } from '@/lib/schema';
