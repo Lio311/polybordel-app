@@ -2,15 +2,15 @@
 
 import { db } from '@/lib/db';
 import { betsTable, betOptionsTable, transactionsTable, usersTable } from '@/lib/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export async function placeBet(userId: string, betOptionId: number, amount: number) {
-    // 1. Get or auto-create user with $1000 starting balance
+    // 1. Get user (the /api/balance route creates them on first load)
     let [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
     if (!user) {
-        // First-time user — create them with 100000 cents ($1000)
+        // Fallback: auto-create user if they still don't exist
         const inserted = await db.insert(usersTable)
-            .values({ id: userId, balance: 100000 })
+            .values({ id: userId, email: 'user@polybordel.com', balance: 100000, role: 'user' })
             .returning();
         user = inserted[0];
     }
@@ -18,37 +18,34 @@ export async function placeBet(userId: string, betOptionId: number, amount: numb
         throw new Error('Insufficient balance');
     }
 
-    // 2. Calculate Shares (For simplicity: Shares = Amount / Probability)
-    // E.g. placing 100¢ on a 50% probability option gives 2 shares.
+    // 2. Get the bet option
     const [option] = await db.select().from(betOptionsTable).where(eq(betOptionsTable.id, betOptionId));
     if (!option) throw new Error('Option not found');
 
-    // Convert probability to a 0-1 multiplier (e.g. 50 probability -> 0.5)
-    // Amount is in cents.
     const probabilityDecimal = option.probability / 100;
-    const shares = Math.floor(amount / probabilityDecimal);
+    const shares = probabilityDecimal > 0 ? Math.floor(amount / probabilityDecimal) : amount;
 
-    // 3. Perform the purchase transaction
-    await db.transaction(async (trx) => {
-        // Deduct balance
-        await trx.update(usersTable)
-            .set({ balance: user.balance - amount })
-            .where(eq(usersTable.id, userId));
+    // 3. Sequential updates — Neon HTTP driver does NOT support db.transaction()
+    // Deduct balance
+    await db.update(usersTable)
+        .set({ balance: user.balance - amount })
+        .where(eq(usersTable.id, userId));
 
-        // Create transaction record
-        await trx.insert(transactionsTable).values({
-            userId,
-            betOptionId,
-            amount,
-            shares,
-        });
-
-        // Update the bet's total volume
-        const [bet] = await trx.select().from(betsTable).where(eq(betsTable.id, option.betId));
-        if (bet) {
-            await trx.update(betsTable).set({ volume: bet.volume + amount }).where(eq(betsTable.id, bet.id));
-        }
+    // Record transaction
+    await db.insert(transactionsTable).values({
+        userId,
+        betOptionId,
+        amount,
+        shares,
     });
+
+    // Update bet volume
+    const [bet] = await db.select().from(betsTable).where(eq(betsTable.id, option.betId));
+    if (bet) {
+        await db.update(betsTable)
+            .set({ volume: bet.volume + amount })
+            .where(eq(betsTable.id, bet.id));
+    }
 
     return { success: true, shares };
 }
