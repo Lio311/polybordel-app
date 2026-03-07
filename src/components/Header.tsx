@@ -45,8 +45,8 @@ export default function Header() {
                             <Image
                                 src="/logo.png"
                                 alt="Polybordel"
-                                height={36}
-                                width={130}
+                                height={44}
+                                width={160}
                                 style={{ objectFit: 'contain', objectPosition: 'right center' }}
                                 priority
                             />

@@ -79,9 +79,9 @@ export default function BetCard({ bet }: { bet: Bet }) {
 
             {/* Footer */}
             <div className={styles.footer}>
-                <span className={styles.volume}>🔥 {formatVolume(bet.volume)} נפח</span>
+                <span className={styles.volume}>{formatVolume(bet.volume)} נפח</span>
                 <button className={styles.shareBtn} onClick={() => shareToWhatsApp(bet)}>
-                    שתף בוואטסאפ 📱
+                    שתף בוואטסאפ
                 </button>
             </div>
         </div>

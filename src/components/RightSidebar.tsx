@@ -4,15 +4,15 @@ import styles from './RightSidebar.module.css';
 const breakingNews = [
     { title: 'האם המדד ינסוק ב-10% לפני אפריל?', pct: '11%', up: true },
     { title: 'בחירות 2026: האם ישראל תלך לבחירות לפני מרץ?', pct: '48%', up: true },
-    { title: 'האם הדולר יחצה ₪4 עד סוף החודש?', pct: '16%', up: false },
+    { title: 'האם הדולר יחצה $4 עד סוף החודש?', pct: '16%', up: false },
 ];
 
 const hotTopics = [
-    { name: 'ענקית הטק', vol: '₪17M היום' },
-    { name: 'נדל"ן', vol: '₪48M היום' },
-    { name: 'מדד ת"א 35', vol: '₪495K היום' },
-    { name: 'בייסבול', vol: '₪378K היום' },
-    { name: 'קריפטו', vol: '₪3M היום' },
+    { name: 'ענקית הטק', vol: '$17M היום' },
+    { name: 'נדל"ן', vol: '$48M היום' },
+    { name: 'מדד ת"א 35', vol: '$495K היום' },
+    { name: 'בייסבול', vol: '$378K היום' },
+    { name: 'קריפטו', vol: '$3M היום' },
 ];
 
 export default function RightSidebar() {
@@ -21,7 +21,7 @@ export default function RightSidebar() {
             {/* Breaking News */}
             <div className={styles.widget}>
                 <div className={styles.widgetHeader}>
-                    <h2 className={styles.widgetTitle}>📰 חדשות שוברות &rsaquo;</h2>
+                    <h2 className={styles.widgetTitle}>חדשות שוברות &rsaquo;</h2>
                 </div>
                 <div className={styles.newsList}>
                     {breakingNews.map((item, i) => (
@@ -41,7 +41,7 @@ export default function RightSidebar() {
             {/* Hot Topics */}
             <div className={styles.widget}>
                 <div className={styles.widgetHeader}>
-                    <h2 className={styles.widgetTitle}>🔥 נושאים חמים &rsaquo;</h2>
+                    <h2 className={styles.widgetTitle}>נושאים חמים &rsaquo;</h2>
                 </div>
                 <div className={styles.topicsList}>
                     {hotTopics.map((topic, i) => (
@@ -49,7 +49,6 @@ export default function RightSidebar() {
                             <span className={styles.topicNum}>{i + 1}</span>
                             <span className={styles.topicName}>{topic.name}</span>
                             <span className={styles.topicVol}>{topic.vol}</span>
-                            <span className={styles.fire}>🔥</span>
                         </div>
                     ))}
                 </div>
