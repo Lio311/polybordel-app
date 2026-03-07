@@ -3,40 +3,36 @@
     top: 0;
     z-index: 100;
     background: #fff;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid #e5e8ec;
     height: 56px;
-    display: flex;
-    align-items: center;
 }
 
 .inner {
-    max-width: 1280px;
+    max-width: 90vw;
+    width: 90%;
     margin: 0 auto;
-    padding: 0 16px;
-    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
+/* ---- Logo ---- */
 .logo {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--foreground);
     flex-shrink: 0;
-    text-decoration: none;
 }
 
 .logoImg {
     border-radius: 8px;
+    display: block;
 }
 
+/* ---- Search (takes most space) ---- */
 .search {
     flex: 1;
-    max-width: 440px;
+    max-width: 560px;
     position: relative;
     display: flex;
     align-items: center;
@@ -44,121 +40,165 @@
 
 .searchIcon {
     position: absolute;
-    left: 12px;
-    color: var(--muted);
-    font-size: 15px;
+    right: 12px;
+    /* RTL: icon on right */
+    font-size: 14px;
     pointer-events: none;
+    line-height: 1;
 }
 
 .searchInput {
     width: 100%;
-    height: 36px;
-    background: var(--background);
-    border: 1px solid var(--border);
+    height: 38px;
+    background: #f5f7fa;
+    border: 1px solid #e5e8ec;
     border-radius: 8px;
-    padding: 0 12px 0 36px;
-    font-size: 13px;
-    color: var(--foreground);
+    padding: 0 36px 0 36px;
+    font-size: 13.5px;
+    color: #1a1b1e;
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: right;
+    direction: rtl;
 }
 
 .searchInput::placeholder {
-    color: var(--muted-light);
+    color: #9ca3af;
 }
 
 .searchInput:focus {
-    border-color: var(--primary);
+    border-color: #0066ff;
     background: #fff;
 }
 
 .shortcut {
     position: absolute;
-    right: 10px;
-    background: var(--border);
+    left: 10px;
+    /* RTL: shortcut on left */
+    background: #e5e8ec;
     border-radius: 4px;
     padding: 2px 6px;
     font-size: 11px;
-    color: var(--muted);
+    color: #6b7280;
     font-family: monospace;
+    border: none;
 }
 
+/* ---- Right Nav ---- */
 .nav {
+    margin-right: auto;
+    /* RTL: push to left side */
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-left: auto;
+    flex-shrink: 0;
 }
 
 .howItWorks {
     display: flex;
     align-items: center;
-    gap: 6px;
-    color: var(--primary);
+    gap: 5px;
+    color: #0066ff;
     font-size: 13px;
     font-weight: 500;
     padding: 6px 10px;
     border-radius: 6px;
+    text-decoration: none;
     transition: background 0.15s;
+    white-space: nowrap;
 }
 
 .howItWorks:hover {
     background: #eff6ff;
 }
 
-.signInBtn {
+.loginBtn {
     font-size: 13px;
     font-weight: 600;
-    color: var(--foreground);
-    padding: 6px 14px;
+    color: #1a1b1e;
+    padding: 7px 14px;
     border-radius: 6px;
-    border: 1px solid var(--border);
+    border: 1px solid #e5e8ec;
+    background: #fff;
+    cursor: pointer;
     transition: background 0.15s;
+    white-space: nowrap;
 }
 
-.signInBtn:hover {
-    background: var(--background);
+.loginBtn:hover {
+    background: #f5f7fa;
 }
 
 .signUpBtn {
     font-size: 13px;
     font-weight: 600;
     color: #fff;
-    background: var(--primary);
-    padding: 6px 14px;
+    background: #0066ff;
+    padding: 7px 14px;
     border-radius: 6px;
+    border: none;
+    cursor: pointer;
     transition: background 0.15s;
+    white-space: nowrap;
 }
 
 .signUpBtn:hover {
-    background: var(--primary-hover);
+    background: #0052cc;
 }
 
-.balanceChip {
+/* hamburger */
+.menuBtn {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--primary);
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background 0.15s;
 }
 
+.menuBtn:hover {
+    background: #f5f7fa;
+}
+
+.menuBtn span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #1a1b1e;
+    border-radius: 2px;
+}
+
+/* User area (when logged in) */
 .userArea {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-@media (max-width: 600px) {
+/* Balance chip */
+.balanceChip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0066ff;
+    white-space: nowrap;
+}
+
+@media (max-width: 640px) {
     .search {
-        display: none;
+        max-width: unset;
     }
 
-    .howItWorks {
+    .howItWorks span:last-child {
         display: none;
     }
 }

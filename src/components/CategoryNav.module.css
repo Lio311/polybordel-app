@@ -10,9 +10,9 @@
 }
 
 .navInner {
-    max-width: 1280px;
+    max-width: 90vw;
+    width: 90%;
     margin: 0 auto;
-    padding: 0 16px;
     display: flex;
     align-items: center;
     gap: 2px;

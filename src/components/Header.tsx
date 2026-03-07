@@ -14,27 +14,29 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.inner}>
-                {/* Logo */}
+
+                {/* Logo only — no text */}
                 <Link href="/" className={styles.logo}>
-                    <Image src="/logo.png" alt="Polybordel" width={28} height={28} className={styles.logoImg} />
-                    Polybordel
+                    <Image src="/logo.png" alt="Polybordel" width={38} height={38} className={styles.logoImg} priority />
                 </Link>
 
-                {/* Search */}
+                {/* Wide Search bar — center */}
                 <div className={styles.search}>
                     <span className={styles.searchIcon}>🔍</span>
                     <input
                         className={styles.searchInput}
-                        placeholder="Search markets..."
+                        placeholder="חפש שווקים..."
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                     />
-                    <span className={styles.shortcut}>/</span>
+                    <kbd className={styles.shortcut}>/</kbd>
                 </div>
 
                 {/* Right Nav */}
                 <nav className={styles.nav}>
-                    <a href="/" className={styles.howItWorks}>ℹ️ How it works</a>
+                    <a href="#" className={styles.howItWorks}>
+                        <span>ℹ️</span> איך זה עובד
+                    </a>
 
                     {!isLoaded ? null : isSignedIn ? (
                         <div className={styles.userArea}>
@@ -44,13 +46,20 @@ export default function Header() {
                     ) : (
                         <>
                             <SignInButton mode="modal">
-                                <button className={styles.signInBtn}>Log In</button>
+                                <button className={styles.loginBtn}>התחברות</button>
                             </SignInButton>
                             <SignInButton mode="modal">
-                                <button className={styles.signUpBtn}>Sign Up</button>
+                                <button className={styles.signUpBtn}>הרשמה</button>
                             </SignInButton>
                         </>
                     )}
+
+                    {/* Hamburger */}
+                    <button className={styles.menuBtn} aria-label="תפריט">
+                        <span />
+                        <span />
+                        <span />
+                    </button>
                 </nav>
             </div>
         </header>
