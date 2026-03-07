@@ -137,3 +137,49 @@
 .fire {
     font-size: 14px;
 }
+
+/* ── Live Market Grid ── */
+.marketGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.marketCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-light);
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.marketCard:last-child {
+    border-bottom: none;
+}
+
+.marketLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+.marketValue {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--foreground);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── News link + meta ── */
+.newsItem {
+    text-decoration: none;
+    color: inherit;
+}
+
+.newsMeta {
+    font-size: 11px;
+    color: var(--muted-light);
+}
