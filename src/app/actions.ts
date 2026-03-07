@@ -5,10 +5,17 @@ import { betsTable, betOptionsTable, transactionsTable, usersTable } from '@/lib
 import { eq, desc } from 'drizzle-orm';
 
 export async function placeBet(userId: string, betOptionId: number, amount: number) {
-    // 1. Validate user has enough balance
-    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
-    if (!user || user.balance < amount) {
-        throw new Error('Insufficient balance or user not found');
+    // 1. Get or auto-create user with $1000 starting balance
+    let [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
+    if (!user) {
+        // First-time user — create them with 100000 cents ($1000)
+        const inserted = await db.insert(usersTable)
+            .values({ id: userId, balance: 100000 })
+            .returning();
+        user = inserted[0];
+    }
+    if (user.balance < amount) {
+        throw new Error('Insufficient balance');
     }
 
     // 2. Calculate Shares (For simplicity: Shares = Amount / Probability)

@@ -42,7 +42,7 @@ export default function BetCardActions({ options }: { options: BetOption[] }) {
                 disabled={loadingOptId !== null || !yesOption}
             >
                 {loadingOptId === yesOption?.id ? '...' : 'כן'}
-                {yesOption && <span className={styles.btnPct}>{yesOption.probability}%</span>}
+                {yesOption && <span className={styles.btnPct}>${yesOption.probability}</span>}
             </button>
             <button
                 className={`${styles.betBtn} ${styles.noBtn}`}
@@ -50,7 +50,7 @@ export default function BetCardActions({ options }: { options: BetOption[] }) {
                 disabled={loadingOptId !== null || !noOption}
             >
                 {loadingOptId === noOption?.id ? '...' : 'לא'}
-                {noOption && <span className={styles.btnPct}>{noOption.probability}%</span>}
+                {noOption && <span className={styles.btnPct}>${noOption.probability}</span>}
             </button>
         </div>
     );

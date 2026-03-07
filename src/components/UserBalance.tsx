@@ -23,7 +23,7 @@ export default function UserBalance() {
 
     return (
         <div className={styles.balanceChip}>
-            💰 ${dollars}
+            ${dollars}
         </div>
     );
 }
