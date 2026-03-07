@@ -50,7 +50,7 @@ export default async function RightSidebar() {
                             טוען חדשות...
                         </p>
                     ) : (
-                        news.map((item, i) => (
+                        news.slice(0, 4).map((item, i) => (
                             <a
                                 key={i}
                                 href={item.link}

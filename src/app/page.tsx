@@ -71,9 +71,10 @@ export default async function Home({ searchParams }: PageProps) {
           ) : (
             <>
               {/* Highlight Region: Featured Market + Compact Sidebar */}
-              <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', height: '40vh', alignItems: 'stretch' }}>
+              <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', height: '50vh', alignItems: 'stretch' }}>
                 {/* Compact Sidebar (First in RTL = Right side) */}
-                <div className="layout-sidebar" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', paddingRight: '4px' }}>
+                {/* Let the sidebar overflow the height container visible if needed, without scrollbars */}
+                <div className="layout-sidebar" style={{ display: 'flex', flexDirection: 'column' }}>
                   <RightSidebar />
                 </div>
 
