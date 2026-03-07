@@ -13,7 +13,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'פולי-בורדל | שוק הניחושים',
+  title: 'Polybordel',
   description: 'הניחו על אירועים עולמיים עם כסף וירטואלי. התחל עם $1,000.',
   manifest: '/manifest.json',
   themeColor: '#0066ff',
