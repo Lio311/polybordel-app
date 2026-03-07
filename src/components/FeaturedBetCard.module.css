@@ -4,9 +4,11 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 0;
     box-shadow: var(--shadow-sm);
     gap: 32px;
+    height: 100%;
+    /* Force it to stretch to match the sidebar if needed, or vice versa */
 }
 
 .left {

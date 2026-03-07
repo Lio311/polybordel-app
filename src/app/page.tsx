@@ -47,9 +47,6 @@ export default async function Home({ searchParams }: PageProps) {
   return (
     <div className="layout-wrapper">
       <div className="layout-body">
-        {/* Right Sidebar (RTL: displayed on the right) */}
-        <RightSidebar />
-
         {/* Main Content */}
         <div className="layout-main">
           <h1 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px', color: 'var(--foreground)' }}>
@@ -73,11 +70,22 @@ export default async function Home({ searchParams }: PageProps) {
             </div>
           ) : (
             <>
-              {/* Show the first pinned market as Featured if one exists */}
-              {betsWithOptions.length > 0 && betsWithOptions[0].isPinned && (
-                <FeaturedBetCard bet={betsWithOptions[0] as any} />
-              )}
+              {/* Highlight Region: Featured Market + Compact Sidebar */}
+              <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', alignItems: 'stretch' }}>
+                {/* Main Featured Area */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  {betsWithOptions.length > 0 && betsWithOptions[0].isPinned && (
+                    <FeaturedBetCard bet={betsWithOptions[0] as any} />
+                  )}
+                </div>
 
+                {/* Compact Sidebar */}
+                <div className="layout-sidebar" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <RightSidebar />
+                </div>
+              </div>
+
+              {/* Regular Grid */}
               <div className="stagger-children" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
