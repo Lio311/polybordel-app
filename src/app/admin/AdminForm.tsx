@@ -72,8 +72,7 @@ export default function AdminForm() {
             {/* Category */}
             <div className={styles.field}>
                 <label className={styles.label}>קטגוריה</label>
-                <select name="category" required className={styles.input}>
-                    <option value="trending">טרנדים</option>
+                <select name="category" required className={styles.input} defaultValue="breaking">
                     <option value="breaking">חדשות</option>
                     <option value="sports">ספורט</option>
                     <option value="politics">פוליטיקה</option>

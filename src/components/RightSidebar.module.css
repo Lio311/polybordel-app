@@ -6,9 +6,9 @@
 
 .widget {
     background: transparent;
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px dashed var(--border);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-light);
 }
 
 .widget:last-child {
@@ -21,11 +21,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 0 12px 0;
+    padding: 0 0 10px 0;
 }
 
 .widgetTitle {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--foreground);
     margin: 0;
@@ -34,14 +34,14 @@
 .newsList {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .newsItem {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    padding: 4px 0;
+    gap: 10px;
+    padding: 2px 0;
     transition: opacity 0.15s;
     cursor: pointer;
     text-decoration: none;
@@ -52,11 +52,11 @@
 }
 
 .newsNum {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--muted-light);
     flex-shrink: 0;
-    width: 16px;
+    width: 14px;
     padding-top: 2px;
 }
 
@@ -66,10 +66,10 @@
 }
 
 .newsTitle {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--foreground);
-    line-height: 1.4;
+    line-height: 1.35;
     margin: 0 0 4px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -78,9 +78,9 @@
 }
 
 .newsMeta {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .topicsList {
@@ -134,18 +134,18 @@
 .marketGrid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .marketCard {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 4px 0;
 }
 
 .marketLabel {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--foreground);
     flex: 1;
@@ -155,11 +155,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 2px;
+    gap: 1px;
 }
 
 .marketValue {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--foreground);
     line-height: 1;

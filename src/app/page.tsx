@@ -5,6 +5,7 @@ import { db } from '@/lib/db';
 import { betOptionsTable } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import BetCard from '@/components/BetCard';
+import FeaturedBetCard from '@/components/FeaturedBetCard';
 import RightSidebar from '@/components/RightSidebar';
 
 type PageProps = {
@@ -71,15 +72,24 @@ export default async function Home({ searchParams }: PageProps) {
               </p>
             </div>
           ) : (
-            <div className="stagger-children" style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-              gap: '16px',
-            }}>
-              {betsWithOptions.map((bet) => (
-                <BetCard key={bet.id} bet={bet as any} />
-              ))}
-            </div>
+            <>
+              {/* Show the first pinned market as Featured if one exists */}
+              {betsWithOptions.length > 0 && betsWithOptions[0].isPinned && (
+                <FeaturedBetCard bet={betsWithOptions[0] as any} />
+              )}
+
+              <div className="stagger-children" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                gap: '16px',
+              }}>
+                {betsWithOptions.map((bet, i) => {
+                  // Skip the first item if it was already rendered as the featured card
+                  if (i === 0 && bet.isPinned) return null;
+                  return <BetCard key={bet.id} bet={bet as any} />;
+                })}
+              </div>
+            </>
           )}
         </div>
       </div>

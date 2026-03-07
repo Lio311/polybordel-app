@@ -10,7 +10,7 @@ export async function submitNewBet(formData: FormData) {
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const imageUrl = formData.get('imageUrl') as string;
-    const category = formData.get('category') as string || 'trending';
+    const category = formData.get('category') as string || 'breaking';
     const endDateStr = formData.get('endDate') as string;
     const yesProbStr = formData.get('yesProb') as string;
 
