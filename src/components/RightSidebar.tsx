@@ -75,7 +75,7 @@ export default async function RightSidebar() {
             {/* Breaking News */}
             <div className={styles.widget}>
                 <div className={styles.widgetHeader}>
-                    <h2 className={styles.widgetTitle}>חדשות שוברות &rsaquo;</h2>
+                    <h2 className={styles.widgetTitle}>חדשות מתפרצות &rsaquo;</h2>
                 </div>
                 <div className={styles.newsList}>
                     {news.length === 0 ? (

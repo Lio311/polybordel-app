@@ -44,44 +44,52 @@ export async function getMarketData(): Promise<MarketData> {
     }
 }
 
-// ─── Breaking News (BBC World RSS via rss2json.com – free, no key) ────────────
+// ─── Breaking News (direct BBC/Reuters RSS XML parsing – no API key) ─────────
 
-const RSS_SOURCES = [
-    // BBC World
-    'https://feeds.bbci.co.uk/news/world/rss.xml',
-    // Reuters Top News
-    'https://feeds.reuters.com/reuters/topNews',
+const RSS_FEEDS = [
+    { url: 'https://feeds.bbci.co.uk/news/world/rss.xml', source: 'BBC World' },
+    { url: 'https://feeds.bbci.co.uk/news/technology/rss.xml', source: 'BBC Tech' },
+    { url: 'https://feeds.bbci.co.uk/sport/rss.xml', source: 'BBC Sport' },
 ];
 
-async function fetchRssJson(rssUrl: string): Promise<NewsItem[]> {
-    const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=4`;
-    const res = await fetch(url, { next: { revalidate: 600 } }); // 10 min cache
-    if (!res.ok) return [];
-    const data = await res.json();
-    if (data.status !== 'ok' || !Array.isArray(data.items)) return [];
-    return data.items.map((item: any) => ({
-        title: item.title as string,
-        link: item.link as string,
-        pubDate: item.pubDate as string,
-        source: data.feed?.title ?? 'חדשות',
-    }));
+function extractTag(xml: string, tag: string): string {
+    const m = xml.match(new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>|<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+    return (m?.[1] || m?.[2] || '').trim();
 }
 
-export async function getBreakingNews(): Promise<NewsItem[]> {
+async function parseRss(feed: { url: string; source: string }): Promise<NewsItem[]> {
     try {
-        const results = await Promise.allSettled(RSS_SOURCES.map(fetchRssJson));
-        const all: NewsItem[] = [];
-        for (const r of results) {
-            if (r.status === 'fulfilled') all.push(...r.value);
-        }
-        // Deduplicate by title, take top 6
-        const seen = new Set<string>();
-        return all.filter(n => {
-            if (seen.has(n.title)) return false;
-            seen.add(n.title);
-            return true;
-        }).slice(0, 6);
+        const res = await fetch(feed.url, {
+            next: { revalidate: 600 },
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Polybordel/1.0)' },
+        });
+        if (!res.ok) return [];
+        const xml = await res.text();
+        const itemMatches = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
+        return itemMatches.slice(0, 4).map(m => {
+            const body = m[1];
+            return {
+                title: extractTag(body, 'title'),
+                link: extractTag(body, 'link') || extractTag(body, 'guid'),
+                pubDate: extractTag(body, 'pubDate'),
+                source: feed.source,
+            };
+        }).filter(n => n.title.length > 0);
     } catch {
         return [];
     }
+}
+
+export async function getBreakingNews(): Promise<NewsItem[]> {
+    const results = await Promise.allSettled(RSS_FEEDS.map(parseRss));
+    const all: NewsItem[] = [];
+    for (const r of results) {
+        if (r.status === 'fulfilled') all.push(...r.value);
+    }
+    const seen = new Set<string>();
+    return all.filter(n => {
+        if (!n.title || seen.has(n.title)) return false;
+        seen.add(n.title);
+        return true;
+    }).slice(0, 8);
 }
