@@ -76,7 +76,7 @@ export default function AdminForm() {
                     name="endDate"
                     type="datetime-local"
                     required
-                    className={styles.input}
+                    className={styles.dateInput}
                 />
             </div>
 

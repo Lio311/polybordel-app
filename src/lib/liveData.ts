@@ -80,6 +80,16 @@ async function parseRss(feed: { url: string; source: string }): Promise<NewsItem
     }
 }
 
+async function translateToHebrew(text: string): Promise<string> {
+    try {
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=iw&dt=t&q=${encodeURIComponent(text)}`);
+        const data = await res.json();
+        return data[0][0][0] || text;
+    } catch {
+        return text; // fallback to English if translation fails
+    }
+}
+
 export async function getBreakingNews(): Promise<NewsItem[]> {
     const results = await Promise.allSettled(RSS_FEEDS.map(parseRss));
     const all: NewsItem[] = [];
@@ -87,9 +97,15 @@ export async function getBreakingNews(): Promise<NewsItem[]> {
         if (r.status === 'fulfilled') all.push(...r.value);
     }
     const seen = new Set<string>();
-    return all.filter(n => {
+    const topUnique = all.filter(n => {
         if (!n.title || seen.has(n.title)) return false;
         seen.add(n.title);
         return true;
     }).slice(0, 8);
+
+    // Translate titles to Hebrew
+    return Promise.all(topUnique.map(async item => ({
+        ...item,
+        title: await translateToHebrew(item.title)
+    })));
 }

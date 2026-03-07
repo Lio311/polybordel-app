@@ -39,6 +39,38 @@ export default async function RightSidebar() {
     return (
         <aside className={styles.sidebar}>
 
+            {/* Breaking News */}
+            <div className={styles.widget}>
+                <div className={styles.widgetHeader}>
+                    <h2 className={styles.widgetTitle}>חדשות מתפרצות &rsaquo;</h2>
+                </div>
+                <div className={styles.newsList}>
+                    {news.length === 0 ? (
+                        <p style={{ color: '#9ca3af', fontSize: '0.82rem', textAlign: 'center', padding: '12px' }}>
+                            טוען חדשות...
+                        </p>
+                    ) : (
+                        news.map((item, i) => (
+                            <a
+                                key={i}
+                                href={item.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.newsItem}
+                            >
+                                <span className={styles.newsNum}>{i + 1}</span>
+                                <div className={styles.newsBody}>
+                                    <p className={styles.newsTitle}>{item.title}</p>
+                                    <span className={styles.newsMeta}>
+                                        {item.source} · {timeSince(item.pubDate)}
+                                    </span>
+                                </div>
+                            </a>
+                        ))
+                    )}
+                </div>
+            </div>
+
             {/* Live Market Data */}
             <div className={styles.widget}>
                 <div className={styles.widgetHeader}>
@@ -69,38 +101,6 @@ export default async function RightSidebar() {
                         <Change val={market.ethChange} />
                     </div>
 
-                </div>
-            </div>
-
-            {/* Breaking News */}
-            <div className={styles.widget}>
-                <div className={styles.widgetHeader}>
-                    <h2 className={styles.widgetTitle}>חדשות מתפרצות &rsaquo;</h2>
-                </div>
-                <div className={styles.newsList}>
-                    {news.length === 0 ? (
-                        <p style={{ color: '#9ca3af', fontSize: '0.82rem', textAlign: 'center', padding: '12px' }}>
-                            טוען חדשות...
-                        </p>
-                    ) : (
-                        news.map((item, i) => (
-                            <a
-                                key={i}
-                                href={item.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.newsItem}
-                            >
-                                <span className={styles.newsNum}>{i + 1}</span>
-                                <div className={styles.newsBody}>
-                                    <p className={styles.newsTitle}>{item.title}</p>
-                                    <span className={styles.newsMeta}>
-                                        {item.source} · {timeSince(item.pubDate)}
-                                    </span>
-                                </div>
-                            </a>
-                        ))
-                    )}
                 </div>
             </div>
 
