@@ -19,13 +19,11 @@ export default function UserBalance() {
 
     if (!isLoaded || !isSignedIn || balance === null) return null;
 
-    // Balance is in cents. Convert to dollars.
     const dollars = (balance / 100).toFixed(2);
 
     return (
-        <div className={styles.balanceContainer}>
-            <span className={styles.balanceLabel}>Balance</span>
-            <span className={styles.balanceAmount}>${dollars}</span>
+        <div className={styles.balanceChip}>
+            💰 ${dollars}
         </div>
     );
 }

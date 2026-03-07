@@ -1,53 +1,57 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserButton, useUser, SignInButton } from '@clerk/nextjs';
+import { useUser, SignInButton, UserButton } from '@clerk/nextjs';
 import UserBalance from './UserBalance';
 import styles from './Header.module.css';
 
 export default function Header() {
-    const { isLoaded, isSignedIn, user } = useUser();
+    const { isLoaded, isSignedIn } = useUser();
+    const [search, setSearch] = useState('');
 
     return (
         <header className={styles.header}>
-            <div className={styles.left}>
-                <Link href="/" className={styles.logoLink}>
-                    <div className={styles.logoWrapper}>
-                        <Image src="/logo.png" alt="Polybordel Logo" width={32} height={32} />
-                    </div>
-                    <span className={styles.logoText}>Polybordel</span>
+            <div className={styles.inner}>
+                {/* Logo */}
+                <Link href="/" className={styles.logo}>
+                    <Image src="/logo.png" alt="Polybordel" width={28} height={28} className={styles.logoImg} />
+                    Polybordel
                 </Link>
-                <nav className={styles.nav}>
-                    <Link href="/" className={styles.navItemActive}>Markets</Link>
-                    <Link href="/portfolio" className={styles.navItem}>Portfolio</Link>
-                    <Link href="/admin" className={styles.navItem}>Admin</Link>
-                </nav>
-            </div>
 
-            <div className={styles.center}>
-                <div className={styles.searchBar}>
+                {/* Search */}
+                <div className={styles.search}>
                     <span className={styles.searchIcon}>🔍</span>
-                    <input type="text" placeholder="Search markets..." className={styles.searchInput} />
+                    <input
+                        className={styles.searchInput}
+                        placeholder="Search markets..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                    />
+                    <span className={styles.shortcut}>/</span>
                 </div>
-            </div>
 
-            <div className={styles.right}>
-                {isLoaded && isSignedIn ? (
-                    <div className={styles.userSection}>
-                        <UserBalance />
-                        <div className={styles.profileButton}>
+                {/* Right Nav */}
+                <nav className={styles.nav}>
+                    <a href="/" className={styles.howItWorks}>ℹ️ How it works</a>
+
+                    {!isLoaded ? null : isSignedIn ? (
+                        <div className={styles.userArea}>
+                            <UserBalance />
                             <UserButton />
                         </div>
-                    </div>
-                ) : (
-                    <div className={styles.authButtons}>
-                        <SignInButton mode="modal">
-                            <button className={styles.loginBtn}>Log In / Sign Up</button>
-                        </SignInButton>
-                    </div>
-                )}
+                    ) : (
+                        <>
+                            <SignInButton mode="modal">
+                                <button className={styles.signInBtn}>Log In</button>
+                            </SignInButton>
+                            <SignInButton mode="modal">
+                                <button className={styles.signUpBtn}>Sign Up</button>
+                            </SignInButton>
+                        </>
+                    )}
+                </nav>
             </div>
         </header>
     );

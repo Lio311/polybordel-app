@@ -1,0 +1,139 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.widget {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.widgetHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.widgetTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--foreground);
+    margin: 0;
+}
+
+.widgetLink {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.widgetLink:hover {
+    text-decoration: underline;
+}
+
+.newsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.newsItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-light);
+    transition: background 0.12s;
+    cursor: pointer;
+}
+
+.newsItem:last-child {
+    border-bottom: none;
+}
+
+.newsItem:hover {
+    background: var(--surface-hover);
+}
+
+.newsNum {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted-light);
+    flex-shrink: 0;
+    width: 16px;
+    margin-top: 2px;
+}
+
+.newsBody {
+    flex: 1;
+    min-width: 0;
+}
+
+.newsTitle {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--foreground);
+    line-height: 1.4;
+    margin: 0 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.newsPct {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--yes);
+}
+
+.topicsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.topicItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: background 0.12s;
+}
+
+.topicItem:last-child {
+    border-bottom: none;
+}
+
+.topicItem:hover {
+    background: var(--surface-hover);
+}
+
+.topicNum {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted-light);
+    width: 16px;
+    flex-shrink: 0;
+}
+
+.topicName {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.topicVol {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.fire {
+    font-size: 14px;
+}

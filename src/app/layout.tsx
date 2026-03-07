@@ -1,43 +1,26 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ClerkProvider } from '@clerk/nextjs'
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import type { Metadata } from 'next';
+import { ClerkProvider } from '@clerk/nextjs';
+import Header from '@/components/Header';
+import CategoryNav from '@/components/CategoryNav';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Polybordel",
-  description: "A premium betting market application.",
-  manifest: "/manifest.json",
-  icons: {
-    apple: "/logo.png",
-  },
+  title: 'פולי-בורדל | שוק הניחושים',
+  description: 'הניחו על אירועים עולמיים עם כסף וירטואלי. התחל עם $1,000.',
+  manifest: '/manifest.json',
+  themeColor: '#0066ff',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <html lang="he" dir="rtl">
+        <body>
           <Header />
-          <div className="layout-container">
-            <Sidebar />
-            <main className="main-content">{children}</main>
-          </div>
+          <CategoryNav />
+          <main>
+            {children}
+          </main>
         </body>
       </html>
     </ClerkProvider>

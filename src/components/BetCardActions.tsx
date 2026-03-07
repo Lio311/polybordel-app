@@ -11,30 +11,24 @@ interface BetOption {
     probability: number;
 }
 
-interface BetCardActionsProps {
-    options: BetOption[];
-}
-
-export default function BetCardActions({ options }: BetCardActionsProps) {
+export default function BetCardActions({ options }: { options: BetOption[] }) {
     const { user, isLoaded } = useUser();
     const [loadingOptId, setLoadingOptId] = useState<number | null>(null);
 
-    const yesOption = options.find((o) => o.name === 'Yes');
-    const noOption = options.find((o) => o.name === 'No');
+    const yesOption = options.find(o => o.name === 'Yes');
+    const noOption = options.find(o => o.name === 'No');
 
     const handleBet = async (optionId: number) => {
         if (!isLoaded || !user) {
-            alert('Please login to place a bet.');
+            alert('יש להתחבר לחשבון לפני שמשחקים');
             return;
         }
-
         setLoadingOptId(optionId);
         try {
-            // Hardcode 1000 cents ($10) per bet click for demo
-            await placeBet(user.id, optionId, 1000);
-            alert('Bet placed successfully! Minus $10.00 from your balance.');
-        } catch (error: any) {
-            alert(error.message || 'Failed to place bet. Check your balance.');
+            await placeBet(user.id, optionId, 1000); // $10 per click
+            alert('ההימור נרשם בהצלחה! ✅');
+        } catch (e: any) {
+            alert(e.message || 'שגיאה בניחום ההימור. בדוק את יתרתך.');
         } finally {
             setLoadingOptId(null);
         }
@@ -43,20 +37,20 @@ export default function BetCardActions({ options }: BetCardActionsProps) {
     return (
         <div className={styles.actions}>
             <button
-                onClick={(e) => { e.stopPropagation(); handleBet(yesOption!.id) }}
-                className={`${styles.betButton} ${styles.yesBtn}`}
+                className={`${styles.betBtn} ${styles.yesBtn}`}
+                onClick={() => yesOption && handleBet(yesOption.id)}
                 disabled={loadingOptId !== null || !yesOption}
             >
-                <span className={styles.btnLabel}>{loadingOptId === yesOption?.id ? '...' : 'Yes'}</span>
-                {yesOption && <span className={styles.btnOdds}>{yesOption.probability.toFixed(0)}¢</span>}
+                {loadingOptId === yesOption?.id ? '...' : 'כן'}
+                {yesOption && <span className={styles.btnPct}>{yesOption.probability}¢</span>}
             </button>
             <button
-                onClick={(e) => { e.stopPropagation(); handleBet(noOption!.id) }}
-                className={`${styles.betButton} ${styles.noBtn}`}
+                className={`${styles.betBtn} ${styles.noBtn}`}
+                onClick={() => noOption && handleBet(noOption.id)}
                 disabled={loadingOptId !== null || !noOption}
             >
-                <span className={styles.btnLabel}>{loadingOptId === noOption?.id ? '...' : 'No'}</span>
-                {noOption && <span className={styles.btnOdds}>{noOption.probability.toFixed(0)}¢</span>}
+                {loadingOptId === noOption?.id ? '...' : 'לא'}
+                {noOption && <span className={styles.btnPct}>{noOption.probability}¢</span>}
             </button>
         </div>
     );
