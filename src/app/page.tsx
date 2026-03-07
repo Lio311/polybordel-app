@@ -72,16 +72,16 @@ export default async function Home({ searchParams }: PageProps) {
             <>
               {/* Highlight Region: Featured Market + Compact Sidebar */}
               <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', alignItems: 'stretch' }}>
-                {/* Main Featured Area */}
+                {/* Compact Sidebar (First in RTL = Right side) */}
+                <div className="layout-sidebar" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <RightSidebar />
+                </div>
+
+                {/* Main Featured Area (Second in RTL = Left side) */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   {betsWithOptions.length > 0 && betsWithOptions[0].isPinned && (
                     <FeaturedBetCard bet={betsWithOptions[0] as any} />
                   )}
-                </div>
-
-                {/* Compact Sidebar */}
-                <div className="layout-sidebar" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <RightSidebar />
                 </div>
               </div>
 
