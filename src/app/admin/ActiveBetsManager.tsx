@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { deleteBet, updateBet } from './actions';
+import { deleteBet, updateBet, togglePin } from './actions';
 import styles from './Admin.module.css';
 
 interface BetOption {
@@ -16,6 +16,7 @@ interface Bet {
     imageUrl: string;
     volume: number;
     endDate: Date;
+    isPinned: boolean;
     options?: BetOption[];
 }
 
@@ -55,6 +56,17 @@ export default function ActiveBetsManager({ bets }: { bets: Bet[] }) {
         }
     }
 
+    async function handlePin(betId: number, currentPinned: boolean) {
+        setLoading(betId);
+        try {
+            await togglePin(betId, currentPinned);
+        } catch (e: any) {
+            alert('שגיאה: ' + e.message);
+        } finally {
+            setLoading(null);
+        }
+    }
+
     if (bets.length === 0) {
         return (
             <div className={styles.emptyState}>
@@ -67,7 +79,7 @@ export default function ActiveBetsManager({ bets }: { bets: Bet[] }) {
     return (
         <div className={styles.activeBetsList}>
             {bets.map(bet => (
-                <div key={bet.id} className={styles.activeBetItem}>
+                <div key={bet.id} className={styles.activeBetItem} style={{ border: bet.isPinned ? '2px solid #3b82f6' : undefined }}>
                     {editingId === bet.id ? (
                         /* Edit Mode */
                         <form action={handleUpdate} className={styles.editForm}>
@@ -113,13 +125,24 @@ export default function ActiveBetsManager({ bets }: { bets: Bet[] }) {
                                     <img src={bet.imageUrl} alt="" className={styles.activeBetImg} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                                 )}
                                 <div>
-                                    <p className={styles.activeBetTitle}>{bet.title}</p>
+                                    <p className={styles.activeBetTitle}>
+                                        {bet.isPinned && <span title="נעוץ" style={{ marginRight: 6 }}>📌</span>}
+                                        {bet.title}
+                                    </p>
                                     <p className={styles.activeBetMeta}>
                                         עד {new Date(bet.endDate).toLocaleDateString('he-IL')} · נפח: ${Math.round(bet.volume / 100).toLocaleString()}
                                     </p>
                                 </div>
                             </div>
                             <div className={styles.activeBetBtns}>
+                                <button
+                                    className={styles.editBtn}
+                                    style={{ background: bet.isPinned ? '#e2e8f0' : '#dbeafe', color: bet.isPinned ? '#475569' : '#1d4ed8' }}
+                                    onClick={() => handlePin(bet.id, bet.isPinned)}
+                                    disabled={loading === bet.id}
+                                >
+                                    {bet.isPinned ? 'הסר נעיצה' : 'נעץ'}
+                                </button>
                                 <button className={styles.editBtn} onClick={() => startEdit(bet)}>עריכה</button>
                                 <button className={styles.deleteBtn} onClick={() => handleDelete(bet.id)} disabled={loading === bet.id}>
                                     {loading === bet.id ? '...' : 'מחיקה'}

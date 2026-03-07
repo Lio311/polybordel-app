@@ -10,6 +10,7 @@ export async function submitNewBet(formData: FormData) {
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const imageUrl = formData.get('imageUrl') as string;
+    const category = formData.get('category') as string || 'trending';
     const endDateStr = formData.get('endDate') as string;
     const yesProbStr = formData.get('yesProb') as string;
 
@@ -25,7 +26,7 @@ export async function submitNewBet(formData: FormData) {
         { name: 'No', probability: noProb },
     ];
 
-    await createBet(title, description, imageUrl, new Date(endDateStr), options);
+    await createBet(title, description, imageUrl, category, new Date(endDateStr), options);
     revalidatePath('/');
     revalidatePath('/admin');
 }
@@ -40,6 +41,12 @@ export async function deleteBet(betId: number) {
     // Delete options first (FK constraint), then the bet
     await db.delete(betOptionsTable).where(eq(betOptionsTable.betId, betId));
     await db.delete(betsTable).where(eq(betsTable.id, betId));
+    revalidatePath('/');
+    revalidatePath('/admin');
+}
+
+export async function togglePin(betId: number, currentPinned: boolean) {
+    await db.update(betsTable).set({ isPinned: !currentPinned }).where(eq(betsTable.id, betId));
     revalidatePath('/');
     revalidatePath('/admin');
 }

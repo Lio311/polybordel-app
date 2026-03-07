@@ -80,25 +80,51 @@ export default async function RightSidebar() {
 
                     <div className={styles.marketCard}>
                         <div className={styles.marketLabel}>דולר / שקל</div>
-                        <div className={styles.marketValue}>
-                            ₪{formatPrice(market.usdIls)}
+                        <div className={styles.marketValueArea}>
+                            <div className={styles.marketValue}>
+                                ₪{formatPrice(market.usdIls)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.marketCard}>
+                        <div className={styles.marketLabel}>S&P 500</div>
+                        <div className={styles.marketValueArea}>
+                            <div className={styles.marketValue}>
+                                {formatPrice(market.sp500Usd, 2)}
+                            </div>
+                            <Change val={market.sp500Change} />
+                        </div>
+                    </div>
+
+                    <div className={styles.marketCard}>
+                        <div className={styles.marketLabel}>NASDAQ</div>
+                        <div className={styles.marketValueArea}>
+                            <div className={styles.marketValue}>
+                                {formatPrice(market.nasdaqUsd, 2)}
+                            </div>
+                            <Change val={market.nasdaqChange} />
                         </div>
                     </div>
 
                     <div className={styles.marketCard}>
                         <div className={styles.marketLabel}>ביטקוין (BTC)</div>
-                        <div className={styles.marketValue}>
-                            ${formatPrice(market.btcUsd, 0)}
+                        <div className={styles.marketValueArea}>
+                            <div className={styles.marketValue}>
+                                ${formatPrice(market.btcUsd, 0)}
+                            </div>
+                            <Change val={market.btcChange} />
                         </div>
-                        <Change val={market.btcChange} />
                     </div>
 
                     <div className={styles.marketCard}>
                         <div className={styles.marketLabel}>את'ריום (ETH)</div>
-                        <div className={styles.marketValue}>
-                            ${formatPrice(market.ethUsd, 0)}
+                        <div className={styles.marketValueArea}>
+                            <div className={styles.marketValue}>
+                                ${formatPrice(market.ethUsd, 0)}
+                            </div>
+                            <Change val={market.ethChange} />
                         </div>
-                        <Change val={market.ethChange} />
                     </div>
 
                 </div>

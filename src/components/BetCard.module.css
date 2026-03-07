@@ -63,55 +63,58 @@
     font-weight: 500;
 }
 
-/* Options — for multi-choice bets */
+.chanceBadge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    background: #fdfdfd;
+    border: 1px solid var(--border-light);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.chanceNum {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--foreground);
+    line-height: 1.1;
+}
+
+.chanceText {
+    font-size: 9px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+/* Options — for multi-choice bets (removed from UI, but keep class in case) */
 .options {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-.optionRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-}
-
-.optionName {
-    color: var(--foreground);
-    font-weight: 500;
-}
-
-.optionPct {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.optionPct.yes {
-    color: var(--yes);
-}
-
-.optionPct.no {
-    color: var(--no);
-}
-
 /* Yes/No buttons */
 .actions {
     display: flex;
     gap: 8px;
+    margin-top: auto;
 }
 
 .betBtn {
     flex: 1;
-    height: 36px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
+    height: 42px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: opacity 0.15s, transform 0.1s;
+    justify-content: space-between;
+    padding: 0 16px;
+    transition: transform 0.1s, filter 0.15s;
     border: none;
     cursor: pointer;
 }
@@ -131,7 +134,7 @@
 }
 
 .yesBtn:hover:not(:disabled) {
-    background: #bbf7d0;
+    filter: brightness(0.94);
 }
 
 .noBtn {
@@ -140,12 +143,12 @@
 }
 
 .noBtn:hover:not(:disabled) {
-    background: #fecaca;
+    filter: brightness(0.94);
 }
 
 .btnPct {
-    font-size: 12px;
-    opacity: 0.75;
+    font-size: 15px;
+    font-weight: 700;
 }
 
 /* Footer */

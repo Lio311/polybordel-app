@@ -2,12 +2,13 @@ import { db } from '@/lib/db';
 import { betsTable, betOptionsTable, transactionsTable, usersTable } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
 
-export async function createBet(title: string, description: string, imageUrl: string, endDate: Date, options: { name: string, probability: number }[]) {
+export async function createBet(title: string, description: string, imageUrl: string, category: string, endDate: Date, options: { name: string, probability: number }[]) {
     // Insert Bet
     const [newBet] = await db.insert(betsTable).values({
         title,
         description,
         imageUrl,
+        category,
         endDate,
     }).returning();
 

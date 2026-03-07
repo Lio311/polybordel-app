@@ -38,18 +38,18 @@ export default function BetCardActions({ options }: { options: BetOption[] }) {
         <div className={styles.actions}>
             <button
                 className={`${styles.betBtn} ${styles.yesBtn}`}
-                onClick={() => yesOption && handleBet(yesOption.id)}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); yesOption && handleBet(yesOption.id); }}
                 disabled={loadingOptId !== null || !yesOption}
             >
-                {loadingOptId === yesOption?.id ? '...' : 'כן'}
+                <span>{loadingOptId === yesOption?.id ? '...' : 'כן'}</span>
                 {yesOption && <span className={styles.btnPct}>${yesOption.probability}</span>}
             </button>
             <button
                 className={`${styles.betBtn} ${styles.noBtn}`}
-                onClick={() => noOption && handleBet(noOption.id)}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); noOption && handleBet(noOption.id); }}
                 disabled={loadingOptId !== null || !noOption}
             >
-                {loadingOptId === noOption?.id ? '...' : 'לא'}
+                <span>{loadingOptId === noOption?.id ? '...' : 'לא'}</span>
                 {noOption && <span className={styles.btnPct}>${noOption.probability}</span>}
             </button>
         </div>

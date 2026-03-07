@@ -7,8 +7,36 @@ import { eq } from 'drizzle-orm';
 import BetCard from '@/components/BetCard';
 import RightSidebar from '@/components/RightSidebar';
 
-export default async function Home() {
-  const activeBets = await getActiveBets();
+type PageProps = {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+};
+
+export default async function Home({ searchParams }: PageProps) {
+  const sp = await searchParams;
+  const category = sp?.category || 'trending';
+
+  let activeBets = await getActiveBets();
+
+  // 1. Filter by category
+  if (category !== 'trending') {
+    activeBets = activeBets.filter(bet => bet.category === category);
+  }
+
+  // 2. Sort logic
+  // If 'trending', sort by volume desc. Otherwise, by ID desc (newest first).
+  if (category === 'trending') {
+    activeBets.sort((a, b) => (b.volume || 0) - (a.volume || 0));
+  } else {
+    activeBets.sort((a, b) => b.id - a.id);
+  }
+
+  // 3. Pinning logic
+  // Pinned items always float to the top
+  activeBets.sort((a, b) => {
+    if (a.isPinned && !b.isPinned) return -1;
+    if (!a.isPinned && b.isPinned) return 1;
+    return 0;
+  });
 
   const betsWithOptions = await Promise.all(activeBets.map(async (bet) => {
     const options = await db.select().from(betOptionsTable).where(eq(betOptionsTable.betId, bet.id));

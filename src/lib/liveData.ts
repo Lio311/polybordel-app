@@ -6,6 +6,10 @@ export interface MarketData {
     btcChange: number | null;
     ethUsd: number | null;
     ethChange: number | null;
+    sp500Usd: number | null;
+    sp500Change: number | null;
+    nasdaqUsd: number | null;
+    nasdaqChange: number | null;
 }
 
 export interface NewsItem {
@@ -15,22 +19,27 @@ export interface NewsItem {
     source: string;
 }
 
-// ─── Exchange Rates (frankfurter.app – free, no key) ─────────────────────────
+// ─── Exchange Rates & Crypto & Indices ───────────────────────────────────────
 
 export async function getMarketData(): Promise<MarketData> {
     try {
-        const [fxRes, btcRes] = await Promise.all([
-            fetch('https://api.frankfurter.app/latest?from=USD&to=ILS', {
-                next: { revalidate: 300 }, // cache 5 min
-            }),
-            fetch(
-                'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true',
-                { next: { revalidate: 300 } }
-            ),
+        const [fxRes, btcRes, sp500Res, nasdaqRes] = await Promise.all([
+            fetch('https://api.frankfurter.app/latest?from=USD&to=ILS', { next: { revalidate: 300 } }),
+            fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true', { next: { revalidate: 300 } }),
+            fetch('https://query1.finance.yahoo.com/v8/finance/chart/^GSPC', { next: { revalidate: 300 } }),
+            fetch('https://query1.finance.yahoo.com/v8/finance/chart/^IXIC', { next: { revalidate: 300 } }),
         ]);
 
         const fxData = fxRes.ok ? await fxRes.json() : null;
         const btcData = btcRes.ok ? await btcRes.json() : null;
+        const spData = sp500Res.ok ? await sp500Res.json() : null;
+        const ndqData = nasdaqRes.ok ? await nasdaqRes.json() : null;
+
+        const spMeta = spData?.chart?.result?.[0]?.meta;
+        const spChange = spMeta ? ((spMeta.regularMarketPrice - spMeta.previousClose) / spMeta.previousClose) * 100 : null;
+
+        const ndqMeta = ndqData?.chart?.result?.[0]?.meta;
+        const ndqChange = ndqMeta ? ((ndqMeta.regularMarketPrice - ndqMeta.previousClose) / ndqMeta.previousClose) * 100 : null;
 
         return {
             usdIls: fxData?.rates?.ILS ?? null,
@@ -38,9 +47,13 @@ export async function getMarketData(): Promise<MarketData> {
             btcChange: btcData?.bitcoin?.usd_24h_change ?? null,
             ethUsd: btcData?.ethereum?.usd ?? null,
             ethChange: btcData?.ethereum?.usd_24h_change ?? null,
+            sp500Usd: spMeta?.regularMarketPrice ?? null,
+            sp500Change: spChange,
+            nasdaqUsd: ndqMeta?.regularMarketPrice ?? null,
+            nasdaqChange: ndqChange,
         };
     } catch {
-        return { usdIls: null, btcUsd: null, btcChange: null, ethUsd: null, ethChange: null };
+        return { usdIls: null, btcUsd: null, btcChange: null, ethUsd: null, ethChange: null, sp500Usd: null, sp500Change: null, nasdaqUsd: null, nasdaqChange: null };
     }
 }
 

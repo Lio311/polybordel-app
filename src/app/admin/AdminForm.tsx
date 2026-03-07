@@ -69,6 +69,21 @@ export default function AdminForm() {
                 />
             </div>
 
+            {/* Category */}
+            <div className={styles.field}>
+                <label className={styles.label}>קטגוריה</label>
+                <select name="category" required className={styles.input}>
+                    <option value="trending">טרנדים</option>
+                    <option value="breaking">חדשות</option>
+                    <option value="sports">ספורט</option>
+                    <option value="politics">פוליטיקה</option>
+                    <option value="economy">כלכלה</option>
+                    <option value="entertainment">בידור</option>
+                    <option value="geopolitics">גיאופוליטיקה</option>
+                    <option value="tech">טכנולוגיה</option>
+                </select>
+            </div>
+
             {/* End Date */}
             <div className={styles.field}>
                 <label className={styles.label}>תאריך סיום</label>

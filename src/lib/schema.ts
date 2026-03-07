@@ -12,6 +12,8 @@ export const betsTable = pgTable('bets', {
     title: text('title').notNull(),
     description: text('description').notNull(),
     imageUrl: text('image_url').notNull(), // Made mandatory for Polymarket aesthetics
+    category: text('category').notNull().default('trending'), // new category column
+    isPinned: boolean('is_pinned').notNull().default(false), // Admin pin feature
     volume: integer('volume').notNull().default(0),
     endDate: timestamp('end_date').notNull(),
     resolved: boolean('resolved').notNull().default(false), // Did the admin resolve this?

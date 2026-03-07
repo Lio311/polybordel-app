@@ -56,20 +56,10 @@ export default function BetCard({ bet }: { bet: Bet }) {
                     <p className={styles.category}>הימור</p>
                     <h3 className={styles.title}>{bet.title}</h3>
                 </div>
-            </div>
-
-            {/* Options probabilities */}
-            <div className={styles.options}>
                 {yesOption && (
-                    <div className={styles.optionRow}>
-                        <span className={styles.optionName}>כן</span>
-                        <span className={`${styles.optionPct} ${styles.yes}`}>{yesOption.probability}%</span>
-                    </div>
-                )}
-                {noOption && (
-                    <div className={styles.optionRow}>
-                        <span className={styles.optionName}>לא</span>
-                        <span className={`${styles.optionPct} ${styles.no}`}>{noOption.probability}%</span>
+                    <div className={styles.chanceBadge}>
+                        <span className={styles.chanceNum}>{yesOption.probability}%</span>
+                        <span className={styles.chanceText}>סיכוי</span>
                     </div>
                 )}
             </div>

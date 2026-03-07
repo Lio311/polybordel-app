@@ -5,67 +5,59 @@
 }
 
 .widget {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
+    background: transparent;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border);
+}
+
+.widget:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .widgetHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px 10px;
-    border-bottom: 1px solid var(--border-light);
+    padding: 0 0 12px 0;
 }
 
 .widgetTitle {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--foreground);
     margin: 0;
 }
 
-.widgetLink {
-    font-size: 12px;
-    color: var(--primary);
-    font-weight: 500;
-}
-
-.widgetLink:hover {
-    text-decoration: underline;
-}
-
 .newsList {
     display: flex;
     flex-direction: column;
+    gap: 12px;
 }
 
 .newsItem {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border-light);
-    transition: background 0.12s;
+    gap: 12px;
+    padding: 4px 0;
+    transition: opacity 0.15s;
     cursor: pointer;
-}
-
-.newsItem:last-child {
-    border-bottom: none;
+    text-decoration: none;
 }
 
 .newsItem:hover {
-    background: var(--surface-hover);
+    opacity: 0.7;
 }
 
 .newsNum {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--muted-light);
     flex-shrink: 0;
     width: 16px;
-    margin-top: 2px;
+    padding-top: 2px;
 }
 
 .newsBody {
@@ -74,7 +66,7 @@
 }
 
 .newsTitle {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--foreground);
     line-height: 1.4;
@@ -85,10 +77,10 @@
     overflow: hidden;
 }
 
-.newsPct {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--yes);
+.newsMeta {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
 }
 
 .topicsList {
@@ -138,38 +130,39 @@
     font-size: 14px;
 }
 
-/* ── Live Market Grid ── */
+/* ── Live Market List ── */
 .marketGrid {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 12px;
 }
 
 .marketCard {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border-light);
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.marketCard:last-child {
-    border-bottom: none;
+    padding: 6px 0;
 }
 
 .marketLabel {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    color: var(--muted);
-    flex-shrink: 0;
+    color: var(--foreground);
+    flex: 1;
+}
+
+.marketValueArea {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
 }
 
 .marketValue {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--foreground);
+    line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
