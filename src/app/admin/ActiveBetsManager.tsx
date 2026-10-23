@@ -36,8 +36,8 @@ export default function ActiveBetsManager({ bets }: { bets: Bet[] }) {
         setLoading(betId);
         try {
             await deleteBet(betId);
-        } catch (e: any) {
-            alert('שגיאה: ' + e.message);
+        } catch (e) {
+            alert('שגיאה: ' + (e instanceof Error ? e.message : String(e)));
         } finally {
             setLoading(null);
         }
@@ -49,8 +49,8 @@ export default function ActiveBetsManager({ bets }: { bets: Bet[] }) {
         try {
             await updateBet(formData);
             setEditingId(null);
-        } catch (e: any) {
-            alert('שגיאה: ' + e.message);
+        } catch (e) {
+            alert('שגיאה: ' + (e instanceof Error ? e.message : String(e)));
         } finally {
             setLoading(null);
         }
@@ -60,8 +60,8 @@ export default function ActiveBetsManager({ bets }: { bets: Bet[] }) {
         setLoading(betId);
         try {
             await togglePin(betId, currentPinned);
-        } catch (e: any) {
-            alert('שגיאה: ' + e.message);
+        } catch (e) {
+            alert('שגיאה: ' + (e instanceof Error ? e.message : String(e)));
         } finally {
             setLoading(null);
         }

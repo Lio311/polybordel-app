@@ -81,7 +81,7 @@ export default async function Home({ searchParams }: PageProps) {
                 {/* Main Featured Area (Second in RTL = Left side) */}
                 <div style={{ flex: 1, minWidth: 0, height: '100%' }}>
                   {betsWithOptions.length > 0 && betsWithOptions[0].isPinned && (
-                    <FeaturedBetCard bet={betsWithOptions[0] as any} />
+                    <FeaturedBetCard bet={betsWithOptions[0]} />
                   )}
                 </div>
               </div>
@@ -95,7 +95,7 @@ export default async function Home({ searchParams }: PageProps) {
                 {betsWithOptions.map((bet, i) => {
                   // Skip the first item if it was already rendered as the featured card
                   if (i === 0 && bet.isPinned) return null;
-                  return <BetCard key={bet.id} bet={bet as any} />;
+                  return <BetCard key={bet.id} bet={bet} />;
                 })}
               </div>
             </>

@@ -27,8 +27,8 @@ export default function BetCardActions({ options }: { options: BetOption[] }) {
         try {
             await placeBet(user.id, optionId, 1000); // $10 per click
             alert('ההימור נרשם בהצלחה! ✅');
-        } catch (e: any) {
-            alert(e.message || 'שגיאה בניחום ההימור. בדוק את יתרתך.');
+        } catch (e) {
+            alert((e instanceof Error && e.message) || 'שגיאה בניחום ההימור. בדוק את יתרתך.');
         } finally {
             setLoadingOptId(null);
         }
