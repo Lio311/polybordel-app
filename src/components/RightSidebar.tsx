@@ -118,7 +118,7 @@ export default async function RightSidebar() {
                     </div>
 
                     <div className={styles.marketCard}>
-                        <div className={styles.marketLabel}>את'ריום (ETH)</div>
+                        <div className={styles.marketLabel}>את&apos;ריום (ETH)</div>
                         <div className={styles.marketValueArea}>
                             <div className={styles.marketValue}>
                                 ${formatPrice(market.ethUsd, 0)}

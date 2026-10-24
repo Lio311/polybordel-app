@@ -21,8 +21,8 @@ export default function AdminForm() {
             setSuccess(true);
             formRef.current?.reset();
             setYesProb(50);
-        } catch (e: any) {
-            alert('שגיאה: ' + (e.message || 'לא ניתן ליצור הימור'));
+        } catch (e) {
+            alert('שגיאה: ' + ((e instanceof Error && e.message) || 'לא ניתן ליצור הימור'));
         } finally {
             setSubmitting(false);
         }
